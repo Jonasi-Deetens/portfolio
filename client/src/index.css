@@ -35,6 +35,15 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: center;
+  margin: 50px;
+  color: #333333;
+}
+
 button {
   border-radius: 50px;
   padding: 10px 15px;
@@ -57,9 +66,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.active {
+  color: #ff6347 !important;
+}
+
 .link {
   color: #333333;
   font-weight: bold;
+  margin: auto 10px;
 }
 
 .link:hover {
@@ -70,11 +84,11 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    /* color: #213547; */
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    /* color: #747bff; */
   }
   button {
     /* background-color: #f9f9f9; */
