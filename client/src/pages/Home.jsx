@@ -1,12 +1,11 @@
 import React from 'react'
+import PortfolioItems from '../components/PortfolioItems'
 
 const Home = () => {
   return (
-    <main>
-        <h2>HOME</h2>
-        <section className='flex items-center justify-around'>
-
-        </section>
+    <main className='flex flex-col justify-between'>
+        <h2>Welcome to my dev portfolio!</h2>
+        <PortfolioItems />
     </main>
   )
 }
