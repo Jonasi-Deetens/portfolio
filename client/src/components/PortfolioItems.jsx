@@ -1,13 +1,13 @@
 import React from 'react'
 import PortfolioItem from './PortfolioItem'
+import PortfolioItemData from '../data/PortfolioItemData'
 
 const PortfolioItems = () => {
     return (
         <section className='flex flex-wrap items-center justify-around'>
-            <PortfolioItem />
-            <PortfolioItem />   
-            <PortfolioItem />   
-            <PortfolioItem />   
+            {PortfolioItemData.map(data => (
+                <PortfolioItem image={data.image} title={data.title} text={data.text}/>
+            ))}
         </section>
     )
 }
