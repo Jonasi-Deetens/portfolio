@@ -9,9 +9,9 @@ const subCategorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    example: {
+    code: {
         type: String,
-        required: true
+        default: ""
     },
     created_at: {
         type: Date,
