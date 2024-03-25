@@ -9,8 +9,8 @@
   position: relative;
 
   color-scheme: light dark;
-  color: #333333;
-  background-color: #242424;
+  color: #fafafa;
+  background-color: #333333;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -41,7 +41,11 @@ h2 {
   line-height: 1.1;
   text-align: center;
   padding: 50px;
-  color: #333333;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 button {
@@ -76,7 +80,7 @@ main {
 }
 
 .link {
-  color: #333333;
+  color: #fafafa;
   font-weight: bold;
   margin: auto 10px;
 }
