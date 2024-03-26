@@ -15,7 +15,7 @@ const SearchTree = ({searchItems, addItem, setSearchedItem, setSearchedSubItem})
     
     return (
         <div className='h-full w-full py-28 bg-secondaryDark'>
-            <ul className='pl-10'>
+            <ul className='px-10'>
                 {searchItems && searchItems.map((item) => (
                     <SearchTreeItem item={item} activeItem={activeItem} setActiveItem={setActiveItem} activeSubItem={activeSubItem} setActiveSubItem={setActiveSubItem}/>
                 ))}

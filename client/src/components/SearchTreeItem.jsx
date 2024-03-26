@@ -11,9 +11,9 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
     }, [activeItem])
     
 
-    const changeActiveItem = (title) => {
-        if (activeItem.title === title) setActiveItem("");
-        else setActiveItem(title);
+    const changeActiveItem = (item) => {
+        if (activeItem.title === item.title) setActiveItem("");
+        else setActiveItem(item);
         setActiveSubItem("");
     }
 

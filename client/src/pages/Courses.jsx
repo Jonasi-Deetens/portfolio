@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SearchTree from '../components/SearchTree'
+import TabContainer from '../components/TabContainer';
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
@@ -51,13 +52,16 @@ const Courses = () => {
     
     return (
         <div className='flex'>
-            <aside className='h-svh w-auto'>
+            <aside className='min-h-svh w-auto'>
                 <SearchTree searchItems={courses} addItem={addCourse} setSearchedItem={setSearchedItem} setSearchedSubItem={setSearchedSubItem}/>
             </aside>
             <main className='w-full py-20'>
                 <section>
                     <h2 className='my-5'>{searchedItem.title}</h2>
                     <h3 className='text-center'>{searchedSubItem.title}</h3>
+                    {searchedSubItem && 
+                        <TabContainer category={searchedSubItem} />
+                    }
                 </section>
             </main>
         </div>

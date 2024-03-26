@@ -49,21 +49,22 @@ h3 {
 }
 
 button {
-  border-radius: 50px;
   padding: 10px 15px;
   font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
   color: #FAFAFA;
-  background-color: #ff6347;
+  background-color: #ff6347 !important;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  color: #FAFAFA;
-  background-color: #333333;
-  border-color: #646cff;
+  color: #333333;
+  background-color: #FAFAFA !important;
   transform: scale(1.05);
+}
+button:active {
+  border: #242424;
 }
 button:focus,
 button:focus-visible {
