@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import AddForm from './AddForm';
 import { useEffect } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { nord, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const TabContainer = ({category}) => {
     const [activeTab, setActiveTab] = useState("");
@@ -84,10 +87,10 @@ const TabContainer = ({category}) => {
     };
 
     return (
-        <section className='w-10/12 m-auto'>
+        <section className='w-10/12 m-auto overflow-auto'>
             <section className='h-fit px-2 pt-2 bg-secondaryDark border border-secondaryDark border-b-0 rounded-t-md flex'>
                 {category.subcategories.map((subcategory) => (
-                    <div onClick={() => changeActiveTab(subcategory)} className={`w-fit border-r border-secondaryDark px-5 py-2 text-center rounded-t-xl hover:bg-primary hover:cursor-pointer flex items-center ${activeTab.title === subcategory.title ? "bg-primary" : "bg-ctaDark"}`}>
+                    <div onClick={() => changeActiveTab(subcategory)} className={`w-fit border-r border-secondaryDark px-5 py-2 text-center rounded-t-xl hover:bg-primary hover:cursor-pointer flex items-center ${( activeTab && activeTab.title === subcategory.title) ? "bg-primary" : "bg-ctaDark"}`}>
                         <p>{subcategory.title}</p>
                     </div>
                 ))}
@@ -97,10 +100,15 @@ const TabContainer = ({category}) => {
             </section>
             <section className='bg-secondaryDark border border-primary'>
                 {activeTab && (
-                    <form onSubmit={updateCode} className='w-full h-full flex justify-center'>
-                    <textarea className='w-full min-h-96 p-5 m-auto' name="example" id="example" placeholder='Add example code here...' value={activeTab.code} onChange={handleCodeChange}></textarea>
-                    <button type='submit'>Update Example</button>
-                    </form>
+                    <section className='overflow-hidden'>
+                        <form onSubmit={updateCode} className='w-full h-full flex justify-center'>
+                            <textarea className='w-full min-h-96 p-5 m-auto' name="example" id="example" placeholder='Add example code here...' value={activeTab.code} onChange={handleCodeChange}></textarea>
+                            <button type='submit'>Update Example</button>
+                        </form>
+                        <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+                            {activeTab.code}
+                        </SyntaxHighlighter>
+                    </section>
                 )}
             </section>
         </section>

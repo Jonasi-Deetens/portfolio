@@ -48,6 +48,10 @@ h3 {
   font-weight: bold;
 }
 
+code {
+  white-space: pre-wrap !important;
+}
+
 button {
   padding: 10px 15px;
   font-size: 1rem;
