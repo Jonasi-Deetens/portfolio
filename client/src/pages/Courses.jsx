@@ -57,8 +57,8 @@ const Courses = () => {
             </aside>
             <main className='w-full py-20'>
                 <section>
-                    <h2 className='my-5'>{searchedItem.title}</h2>
-                    <h3 className='text-center'>{searchedSubItem.title}</h3>
+                    <h2 className=''>{searchedItem.title}</h2>
+                    <h3 className='text-center my-10'>{searchedSubItem.title}</h3>
                     {searchedSubItem && 
                         <TabContainer category={searchedSubItem} />
                     }

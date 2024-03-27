@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import AddForm from './AddForm';
 import SearchTreeSubItem from './SearchTreeSubItem';
+import ConfirmationModal from './ConfirmationModal';
 
 const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActiveSubItem}) => {
     const [active, setActive] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [idToDelete, setIdToDelete] = useState(null);
 
     useEffect(() => {
         if (activeItem.title === item.title) setActive(true);
@@ -39,6 +42,33 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
         }
     }
 
+    const askConfirmation = (id) => {
+        setIdToDelete(id);
+        setIsOpen(true);
+    }
+
+    const handleConfirm = () => {
+        removeCourse(idToDelete)
+        setIdToDelete(null);
+        setIsOpen(false)
+    }
+
+    const removeCourse = async (id) => {
+        try {
+            const response = await fetch('http://127.0.0.1:3050/api/courses/' + id, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': "Application/json"
+                }
+            })
+            if (response.ok) {
+                console.log("Succesfully deleted course")
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     const handleSubmit = async (newTitle) => {
         try {
             const response = await fetch('http://127.0.0.1:3050/api/categories', {
@@ -61,9 +91,11 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
         }
     }
 
+    if (isOpen) return <ConfirmationModal isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={handleConfirm}/>
+
     return (
         <li className={``}>
-            <p onClick={() => {changeActiveItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}  <span className='float-end pr-10'>{(active ? ' - ' : ' + ')}</span></p>
+            <p onClick={() => {changeActiveItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}<span className='float-end pr-10'>{(active ? ' - ' : ' + ')}</span></p><span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(item._id)}>x</span>
             {active && (
                 <ul className='list-disc pl-12'>
                     {item.categories.map((category) => (

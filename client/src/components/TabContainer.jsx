@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import AddForm from './AddForm';
 import { useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { nord, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import ConfirmationModal from './ConfirmationModal';
 
 const TabContainer = ({category}) => {
     const [activeTab, setActiveTab] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [idToDelete, setIdToDelete] = useState(null);
 
     useEffect(() => {
         setActiveTab(category.subcategories[0]);
@@ -40,6 +42,33 @@ const TabContainer = ({category}) => {
             console.log(error.message);
         }
     } 
+
+    const askConfirmation = (id) => {
+        setIdToDelete(id);
+        setIsOpen(true);
+    }
+
+    const handleConfirm = () => {
+        removeSubCategory(idToDelete)
+        setIdToDelete(null);
+        setIsOpen(false)
+    }
+
+    const removeSubCategory = async (id) => {
+        try {
+            const response = await fetch('http://127.0.0.1:3050/api/subcategories/' + id, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': "Application/json"
+                }
+            })
+            if (response.ok) {
+                console.log("Succesfully deleted subcategory")
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
     const handleSubmit = async (newTitle) => {
         try {
@@ -86,12 +115,14 @@ const TabContainer = ({category}) => {
         setActiveTab({ ...activeTab, code: e.target.value });
     };
 
+    if (isOpen) return <ConfirmationModal isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={handleConfirm}/>
+
     return (
         <section className='w-10/12 m-auto overflow-auto'>
             <section className='h-fit px-2 pt-2 bg-secondaryDark border border-secondaryDark border-b-0 rounded-t-md flex'>
                 {category.subcategories.map((subcategory) => (
-                    <div onClick={() => changeActiveTab(subcategory)} className={`w-fit border-r border-secondaryDark px-5 py-2 text-center rounded-t-xl hover:bg-primary hover:cursor-pointer flex items-center ${( activeTab && activeTab.title === subcategory.title) ? "bg-primary" : "bg-ctaDark"}`}>
-                        <p>{subcategory.title}</p>
+                    <div onClick={() => changeActiveTab(subcategory)} className={`w-fit border-r border-secondaryDark px-5 py-2 text-center rounded-t-xl hover:cursor-pointer flex items-center ${( activeTab && activeTab.title === subcategory.title) ? "bg-primary" : "bg-ctaDark"}`}>
+                        <p>{subcategory.title}<span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(subcategory._id)}>x</span></p>
                     </div>
                 ))}
                 <div className='w-fit h-full p-2 text-center rounded-t-xl bg-ctaDark flex items-center'>
