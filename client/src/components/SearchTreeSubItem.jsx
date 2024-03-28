@@ -50,9 +50,9 @@ const SearchTreeSubItem = ({item, activeSubItem, setActiveSubItem}) => {
     if (isOpen) return <ConfirmationModal isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={handleConfirm}/>
 
     return (
-        <li className={``}>
+        <li className='flex justify-between items-center'>
             <p onClick={() => {changeActiveSubItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}</p>
-            { isLoggedIn() && <p className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(item._id)}>x</p> }
+            { isLoggedIn() && <p className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl hover:cursor-pointer' onClick={() => askConfirmation(item._id)}>x</p> }
         </li>
     )
 }

@@ -97,8 +97,13 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
 
     return (
         <li className={``}>
-            <p onClick={() => {changeActiveItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}<span className='float-end'>{(active ? ' - ' : ' + ')}</span></p>
-            { isLoggedIn() && <p className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(item._id)}>x</p> }
+            <div className='flex justify-between items-center'>
+                <p onClick={() => {changeActiveItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}</p>
+                <div className='flex justify-between items-center ml-5'>
+                    <p>{(active ? ' - ' : ' + ')}</p>
+                    { isLoggedIn() && <p className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl hover:cursor-pointer' onClick={() => askConfirmation(item._id)}>x</p> }
+                </div>
+            </div>
             {active && (
                 <ul className='list-disc pl-12'>
                     {item.categories.map((category) => (
