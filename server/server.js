@@ -22,6 +22,9 @@ app.use('/api/categories', CategoryRouter);
 import SubCategoryRouter from './Routers/SubCategory.js';
 app.use('/api/subcategories', SubCategoryRouter);
 
+import UserRouter from './Routers/User.js';
+app.use('/auth/users', UserRouter);
+
 app.listen(PORT, () => {
     console.log("Welcome, " + HOST + ". You are connected on port: " + PORT);
 })

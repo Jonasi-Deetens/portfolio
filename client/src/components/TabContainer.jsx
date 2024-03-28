@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AddForm from './AddForm';
 import { useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import ConfirmationModal from './ConfirmationModal';
+import { UserContext } from '../providers/UserProvider.jsx';
 
 const TabContainer = ({category}) => {
     const [activeTab, setActiveTab] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
+    const { isLoggedIn } = useContext(UserContext);
 
     useEffect(() => {
         setActiveTab(category.subcategories[0]);
+        console.log(isLoggedIn())
     }, [category])
     
 
@@ -122,20 +125,24 @@ const TabContainer = ({category}) => {
             <section className='h-fit px-2 pt-2 bg-secondaryDark border border-secondaryDark border-b-0 rounded-t-md flex'>
                 {category.subcategories.map((subcategory) => (
                     <div onClick={() => changeActiveTab(subcategory)} className={`w-fit border-r border-secondaryDark px-5 py-2 text-center rounded-t-xl hover:cursor-pointer flex items-center ${( activeTab && activeTab.title === subcategory.title) ? "bg-primary" : "bg-ctaDark"}`}>
-                        <p>{subcategory.title}<span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(subcategory._id)}>x</span></p>
+                        <p>{subcategory.title}{isLoggedIn() && <span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(subcategory._id)}>x</span>}</p>
                     </div>
                 ))}
-                <div className='w-fit h-full p-2 text-center rounded-t-xl bg-ctaDark flex items-center'>
-                    <AddForm handleSubmit={handleSubmit}/>
-                </div>
+                {isLoggedIn() && 
+                    <div className='w-fit h-full p-2 text-center rounded-t-xl bg-ctaDark flex items-center'>
+                        <AddForm handleSubmit={handleSubmit}/>
+                    </div>
+                }
             </section>
             <section className='bg-secondaryDark border border-primary'>
                 {activeTab && (
                     <section className='overflow-hidden'>
-                        <form onSubmit={updateCode} className='w-full h-full flex justify-center'>
-                            <textarea className='w-full min-h-96 p-5 m-auto' name="example" id="example" placeholder='Add example code here...' value={activeTab.code} onChange={handleCodeChange}></textarea>
-                            <button type='submit'>Update Example</button>
-                        </form>
+                        {isLoggedIn() && 
+                            <form onSubmit={updateCode} className='w-full h-full flex justify-center'>
+                                <textarea className='w-full min-h-96 p-5 m-auto' name="example" id="example" placeholder='Add example code here...' value={activeTab.code} onChange={handleCodeChange}></textarea>
+                                <button type='submit'>Update Example</button>
+                            </form>
+                        }
                         <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
                             {activeTab.code}
                         </SyntaxHighlighter>

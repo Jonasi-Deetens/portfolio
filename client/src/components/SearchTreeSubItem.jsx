@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ConfirmationModal from './ConfirmationModal';
+import { UserContext } from '../providers/UserProvider';
 
 const SearchTreeSubItem = ({item, activeSubItem, setActiveSubItem}) => {
+    const { isLoggedIn } = useContext(UserContext);
     const [active, setActive] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
@@ -50,7 +52,7 @@ const SearchTreeSubItem = ({item, activeSubItem, setActiveSubItem}) => {
     return (
         <li className={``}>
             <p onClick={() => {changeActiveSubItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}</p>
-            <span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(item._id)}>x</span>
+            { isLoggedIn() && <p className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(item._id)}>x</p> }
         </li>
     )
 }
