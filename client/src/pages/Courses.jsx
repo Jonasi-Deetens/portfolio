@@ -29,9 +29,6 @@ const Courses = () => {
     }, [])
 
     const addCourse = async (newTitle) => {
-        console.log("in add course")
-        console.log(newTitle)
-
         try {
             const response = await fetch('http://127.0.0.1:3050/api/courses', {
                 method: "POST",

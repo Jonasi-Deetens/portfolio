@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AddForm from './AddForm';
 import SearchTreeSubItem from './SearchTreeSubItem';
 import ConfirmationModal from './ConfirmationModal';
+import { UserContext } from '../providers/UserProvider';
 
 const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActiveSubItem}) => {
+    const { isLoggedIn } = useContext(UserContext);
     const [active, setActive] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
@@ -95,13 +97,19 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
 
     return (
         <li className={``}>
-            <p onClick={() => {changeActiveItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}<span className='float-end pr-10'>{(active ? ' - ' : ' + ')}</span></p><span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(item._id)}>x</span>
+            <div className='flex justify-between items-center'>
+                <p onClick={() => {changeActiveItem(item)}} className={`my-3 text-lightColor hover:text-primary hover:cursor-pointer ${active ? "text-primary font-bold" : ""}`}>{item.title}</p>
+                <div className='flex justify-between items-center ml-5'>
+                    <p>{(active ? ' - ' : ' + ')}</p>
+                    { isLoggedIn() && <p className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl hover:cursor-pointer' onClick={() => askConfirmation(item._id)}>x</p> }
+                </div>
+            </div>
             {active && (
                 <ul className='list-disc pl-12'>
                     {item.categories.map((category) => (
                         <SearchTreeSubItem item={category} activeSubItem={activeSubItem} setActiveSubItem={setActiveSubItem}/>
                     ))}
-                    <li className='my-3'><AddForm handleSubmit={handleSubmit}/></li>
+                    { isLoggedIn() && <li className='my-3'><AddForm handleSubmit={handleSubmit}/></li> }
                 </ul>
             )}
         </li>
