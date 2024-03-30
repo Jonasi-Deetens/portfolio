@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import CategoryModel from '../Models/Category.js';
+import { sendMessageToClients } from '../Websockets/websocket.js';
 
 const router = express.Router();
 
@@ -13,7 +14,8 @@ router.post('/', async (req, res) => {
         });
 
         const savedCategory= await newCategory.save();
-        console.log("Succesfully saved course: ", savedCategory);
+        console.log("Succesfully saved category: ", savedCategory);
+        sendMessageToClients();
         res.status(201).json(savedCategory);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -38,6 +40,7 @@ router.get('/:id', getCategory, async (req, res) => {
 router.delete('/:id', getCategory, async(req, res) => {
     try {
         await res.category.deleteOne();
+        sendMessageToClients();
         res.json({message: "Category succesfully deleted"})
     } catch (error) {
         res.status(500).json({message: error.message});

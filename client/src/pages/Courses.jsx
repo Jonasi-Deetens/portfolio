@@ -25,7 +25,33 @@ const Courses = () => {
             }
         }
 
+        let ws;
+        const connectWebSocket = () => {
+            ws = new WebSocket("ws://127.0.0.1:3050/ws");
+            ws.onopen = () => {
+                console.log("WebSocket connected");
+            };
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                if (message.event === "update") {
+                console.log("message received");
+                fetchCourses();
+                }
+            };
+            ws.onclose = () => {
+                console.log("WebSocket disconnected. Reconnecting...");
+                connectWebSocket(); // Retry after 5 seconds
+            };
+        };
+
         fetchCourses();
+        connectWebSocket();
+
+        return () => {
+            if (ws) {
+                ws.close();
+            }
+        };
     }, [])
 
     const addCourse = async (newTitle) => {
@@ -54,8 +80,8 @@ const Courses = () => {
             </aside>
             <main className='w-full py-20'>
                 <section>
-                    <h2 className=''>{searchedItem.title}</h2>
-                    <h3 className='text-center my-10'>{searchedSubItem.title}</h3>
+                    <h2 className='pb-5'>{searchedItem.title}</h2>
+                    <h3 className='text-center mb-10'>{searchedSubItem.title}</h3>
                     {searchedSubItem && 
                         <TabContainer category={searchedSubItem} />
                     }

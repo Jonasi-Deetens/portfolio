@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import SubCategoryModel from '../Models/SubCategory.js';
+import { sendMessageToClients } from '../Websockets/websocket.js';
 
 const router = express.Router();
 
@@ -12,7 +13,8 @@ router.post('/', async (req, res) => {
         });
 
         const savedSubCategory= await newSubCategory.save();
-        console.log("Succesfully saved course: ", savedSubCategory);
+        console.log("Succesfully saved subcategory: ", savedSubCategory);
+        sendMessageToClients();
         res.status(201).json(savedSubCategory);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -35,6 +37,7 @@ router.get('/:id', getSubCategory, async (req, res) => {
 router.delete('/:id', getSubCategory, async(req, res) => {
     try {
         await res.subCategory.deleteOne();
+        sendMessageToClients();
         res.json({message: "SubCategory succesfully deleted"})
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -51,6 +54,7 @@ router.patch('/:id', getSubCategory, async (req, res) => {
     
     try {
         const updatedSubCategory= await res.subCategory.save();
+        sendMessageToClients();
         res.json(updatedSubCategory);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -63,7 +67,7 @@ async function getSubCategory(req, res, next) {
         subCategory = await SubCategoryModel.findById(req.params.id);
 
         if (subCategory == null) {
-            return res.status(404).json({message: "Category not found"});
+            return res.status(404).json({message: "Subcategory not found"});
         }
     } catch (error) {
         console.log(error.message);
