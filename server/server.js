@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import connectToDatabase from './Database/database.js';
+import { configureWebSocket } from './Websockets/websocket.js';
 
 dotenv.config();
 const app = express();
@@ -9,6 +10,7 @@ const HOST = process.env.HOST || "127.0.0.1";
 const PORT = process.env.PORT || 3050;
 
 connectToDatabase();
+configureWebSocket(app);
 
 app.use(cors());
 app.use(express.json());

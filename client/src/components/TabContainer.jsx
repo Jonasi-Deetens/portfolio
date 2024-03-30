@@ -14,7 +14,6 @@ const TabContainer = ({category}) => {
 
     useEffect(() => {
         setActiveTab(category.subcategories[0]);
-        console.log(isLoggedIn())
     }, [category])
     
 

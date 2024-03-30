@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import CourseModel from '../Models/Course.js';
+import { sendMessageToClients } from '../Websockets/websocket.js';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post('/', async (req, res) => {
 
         const savedCourse = await newCourse.save();
         console.log("Succesfully saved course: ", savedCourse);
+        sendMessageToClients();
         res.status(201).json(savedCourse);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -43,6 +45,7 @@ router.get('/:id', getCourse, async (req, res) => {
 router.delete('/:id', getCourse, async(req, res) => {
     try {
         await res.course.deleteOne();
+        sendMessageToClients();
         res.json({message: "Course succesfully deleted"})
     } catch (error) {
         res.status(500).json({message: error.message});
