@@ -6,7 +6,7 @@ const Navbar = () => {
   const { isLoggedIn, logout } = useContext(UserContext);
 
   return (
-    <nav className='flex justify-between h-20 px-10 py-5 absolute top-0 w-full bg-secondaryDark'>
+    <nav className='flex justify-between h-20 z-50 px-10 py-5 absolute top-0 w-full bg-secondaryDark'>
         <h1 className='text-xl lg:text-3xl'>Jonasi Deetens</h1>
         <ul className='hidden lg:flex items-center'>
             <NavLink to="/" className="link" activeClassName='active'>Home</NavLink>

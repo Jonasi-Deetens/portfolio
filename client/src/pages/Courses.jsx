@@ -6,6 +6,7 @@ const Courses = () => {
     const [courses, setCourses] = useState([]);
     const [searchedItem, setSearchedItem] = useState("");
     const [searchedSubItem, setSearchedSubItem] = useState("");
+    const [showAside, setShowAside] = useState(true);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -72,18 +73,25 @@ const Courses = () => {
             console.log(error.message);
         }
     }
+
+    const showMenu = () => {
+        setShowAside(!showAside);
+    }
     
     return (
         <div className='flex'>
-            <aside className='min-h-svh w-auto'>
-                <SearchTree searchItems={courses} addItem={addCourse} setSearchedItem={setSearchedItem} setSearchedSubItem={setSearchedSubItem}/>
+            <aside className='w-auto min-h-svh relative'>
+                <div className={`${showAside ? "block" : "hidden"} h-full`}>
+                    <SearchTree searchItems={courses} addItem={addCourse} setSearchedItem={setSearchedItem} setSearchedSubItem={setSearchedSubItem}/>
+                </div>
+                <p onClick={showMenu} className="bg-secondaryDark p-2 lg:p-5 rounded-r-md absolute top-1/2 -translate-y-1/2 -right-6 lg:-right-12 hover:shadow-md hover:bg-primary hover:text-secondaryDark hover:cursor-pointer">{showAside ? "<" : ">"}</p>
             </aside>
-            <main className='w-full py-20'>
+            <main className='h-svh w-full overflow-auto pt-20 pb-36'>
                 <section>
                     <h2 className='pb-5'>{searchedItem.title}</h2>
                     <h3 className='text-center mb-10'>{searchedSubItem.title}</h3>
                     {searchedSubItem && 
-                        <TabContainer category={searchedSubItem} />
+                        <TabContainer category={searchedSubItem} language={searchedItem.language} />
                     }
                 </section>
             </main>

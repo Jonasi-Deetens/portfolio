@@ -10,6 +10,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    language: {
+        type: String,
+        default: "javascript"
+    },
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
