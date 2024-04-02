@@ -27,7 +27,7 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
         currentCategories.push(id);
 
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/courses/' + item._id, {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/courses/' + item._id, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "Application/json"
@@ -57,7 +57,7 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
 
     const removeCourse = async (id) => {
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/courses/' + id, {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/courses/' + id, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': "Application/json"
@@ -73,7 +73,7 @@ const SearchTreeItem = ({item, activeItem, setActiveItem, activeSubItem, setActi
 
     const handleSubmit = async (newTitle) => {
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/categories', {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/categories', {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/json"

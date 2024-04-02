@@ -11,7 +11,7 @@ const Courses = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:3050/api/courses', {
+                const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/courses', {
                     method: "GET",
                     headers: {
                         "Content-Type": "Application/json"
@@ -28,7 +28,7 @@ const Courses = () => {
 
         let ws;
         const connectWebSocket = () => {
-            ws = new WebSocket("ws://127.0.0.1:3050/ws");
+            ws = new WebSocket("wss://portfolioserver-vjpfi8hb.b4a.run/ws");
             ws.onopen = () => {
                 console.log("WebSocket connected");
             };
@@ -41,7 +41,7 @@ const Courses = () => {
             };
             ws.onclose = () => {
                 console.log("WebSocket disconnected. Reconnecting...");
-                connectWebSocket(); // Retry after 5 seconds
+                connectWebSocket(); 
             };
         };
 
@@ -57,7 +57,7 @@ const Courses = () => {
 
     const addCourse = async (newTitle) => {
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/courses', {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/courses', {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/json"

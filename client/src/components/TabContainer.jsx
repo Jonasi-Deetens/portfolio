@@ -28,7 +28,7 @@ const TabContainer = ({category, language}) => {
         currentSubcategories.push(id);
 
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/categories/' + category._id, {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/categories/' + category._id, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': "Application/json"
@@ -58,7 +58,7 @@ const TabContainer = ({category, language}) => {
 
     const removeSubCategory = async (id) => {
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/subcategories/' + id, {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/subcategories/' + id, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': "Application/json"
@@ -74,7 +74,7 @@ const TabContainer = ({category, language}) => {
 
     const handleSubmit = async (newTitle) => {
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/subcategories', {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/subcategories', {
                 method: "POST",
                 headers: {
                     'Content-Type': "Application/json"
@@ -96,7 +96,7 @@ const TabContainer = ({category, language}) => {
         e.preventDefault();
         const newExample = e.target.elements.example.value;
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/subcategories/' + activeTab._id, {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/subcategories/' + activeTab._id, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': "Application/json"

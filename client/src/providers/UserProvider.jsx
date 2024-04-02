@@ -12,7 +12,7 @@ const UserProvider = ({children}) => {
         const formData = new FormData(e.target);
 
         try {
-            const response = await fetch('http://127.0.0.1:3050/auth/users/login', {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/auth/users/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "Application/json"
