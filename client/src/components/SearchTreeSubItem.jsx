@@ -33,7 +33,7 @@ const SearchTreeSubItem = ({item, activeSubItem, setActiveSubItem}) => {
 
     const removeCategory = async (id) => {
         try {
-            const response = await fetch('http://127.0.0.1:3050/api/categories/' + id, {
+            const response = await fetch('https://portfolioserver-vjpfi8hb.b4a.run/api/categories/' + id, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': "Application/json"
