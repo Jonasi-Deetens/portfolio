@@ -6,7 +6,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import ConfirmationModal from './ConfirmationModal';
 import { UserContext } from '../providers/UserProvider.jsx';
 
-const TabContainer = ({category}) => {
+const TabContainer = ({category, language}) => {
     const [activeTab, setActiveTab] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
@@ -121,7 +121,7 @@ const TabContainer = ({category}) => {
 
     return (
         <section className='w-10/12 m-auto overflow-auto'>
-            <section className='h-fit px-2 pt-2 bg-secondaryDark border border-secondaryDark border-b-0 rounded-t-md flex'>
+            <section className='h-fit px-2 pt-2 bg-secondaryDark rounded-t-md flex flex-wrap'>
                 {category.subcategories.map((subcategory) => (
                     <div onClick={() => changeActiveTab(subcategory)} className={`w-fit border-r border-secondaryDark px-5 py-2 text-center rounded-t-xl hover:cursor-pointer flex items-center ${( activeTab && activeTab.title === subcategory.title) ? "bg-primary" : "bg-ctaDark"}`}>
                         <p>{subcategory.title}{isLoggedIn() && <span className='text-lightColor hover:text-red-600 ml-5 font-bold text-xl' onClick={() => askConfirmation(subcategory._id)}>x</span>}</p>
@@ -142,7 +142,7 @@ const TabContainer = ({category}) => {
                                 <button type='submit'>Update Example</button>
                             </form>
                         }
-                        <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+                        <SyntaxHighlighter language={language} style={vscDarkPlus}>
                             {activeTab.code}
                         </SyntaxHighlighter>
                     </section>
