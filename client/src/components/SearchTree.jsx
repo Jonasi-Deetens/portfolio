@@ -12,15 +12,20 @@ const SearchTree = ({searchItems, addItem, setSearchedItem, setSearchedSubItem})
         setSearchedItem(activeItem);
         setSearchedSubItem(activeSubItem);
     }, [activeItem, activeSubItem])
-    
-    
+
     return (
         <div className='h-full w-full py-28 bg-secondaryDark'>
             <ul className='px-10'>
-                {searchItems && searchItems.map((item) => (
-                    <SearchTreeItem item={item} activeItem={activeItem} setActiveItem={setActiveItem} activeSubItem={activeSubItem} setActiveSubItem={setActiveSubItem}/>
-                ))}
-                { isLoggedIn() && <li className='my-3'><AddForm handleSubmit={addItem}/></li> }
+                { searchItems.length != 0 ? (
+                    <div>
+                        { searchItems && searchItems.map((item) => (
+                            <SearchTreeItem item={item} activeItem={activeItem} setActiveItem={setActiveItem} activeSubItem={activeSubItem} setActiveSubItem={setActiveSubItem}/>
+                        ))}
+                        { isLoggedIn() && <li className='my-3'><AddForm handleSubmit={addItem}/></li> }
+                    </div>
+                ) : (
+                    <p className='text-primary'>...loading</p>
+                )}
             </ul>
 
         </div>
