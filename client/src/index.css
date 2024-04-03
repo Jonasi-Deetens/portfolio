@@ -68,7 +68,8 @@ button:hover {
   transform: scale(1.05);
 }
 button:active {
-  border: #242424;
+  background-color: #333333 !important;
+  color: #FAFAFA;
 }
 button:focus,
 button:focus-visible {
