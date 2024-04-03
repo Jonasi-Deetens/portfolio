@@ -93,7 +93,7 @@ main {
 
 .link:hover {
   color: #ff6347;
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   text-decoration: underline;
 }
 
